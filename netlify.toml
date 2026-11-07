@@ -1,0 +1,17 @@
+[build]
+  publish = "public"
+  functions = "netlify/functions"
+  command = "npm install"
+
+[functions]
+  node_bundler = "esbuild"
+  # @libsql/client ships a native binding used only for local SQLite files
+  # (never loaded when TURSO_DATABASE_URL points at a remote database, which
+  # is how production is configured) - keep it out of the esbuild bundle and
+  # let Netlify install it into node_modules normally instead.
+  external_node_modules = ["@libsql/client", "libsql"]
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200

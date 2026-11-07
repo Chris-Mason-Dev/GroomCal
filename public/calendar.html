@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calendar · GroomCal</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar"></aside>
+
+    <main class="main">
+      <div class="page-header">
+        <div>
+          <h1>Calendar</h1>
+          <p class="subtitle">Shared schedule for both groomers</p>
+        </div>
+        <button class="btn btn-primary" id="newApptBtn">+ New Appointment</button>
+      </div>
+
+      <div class="calendar-toolbar">
+        <div class="nav-controls">
+          <button class="icon-btn" id="prevBtn" aria-label="Previous">&#8249;</button>
+          <div class="calendar-title" id="calendarTitle"></div>
+          <button class="icon-btn" id="nextBtn" aria-label="Next">&#8250;</button>
+          <button class="btn btn-secondary btn-sm" id="todayBtn">Today</button>
+        </div>
+
+        <div class="groomer-filters" id="groomerFilters"></div>
+
+        <div class="view-switch">
+          <button data-view="timeGridDay">Day</button>
+          <button data-view="timeGridWeek">Week</button>
+          <button data-view="dayGridMonth">Month</button>
+        </div>
+      </div>
+
+      <div id="calendar"></div>
+    </main>
+  </div>
+
+  <!-- Appointment detail popup -->
+  <div class="modal-overlay hidden" id="detailModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="detailTitle">Appointment</h2>
+        <button class="close-btn" data-close="detailModal">&times;</button>
+      </div>
+      <div class="modal-body" id="detailBody"></div>
+      <div class="modal-footer">
+        <div class="footer-left">
+          <button class="btn btn-danger btn-sm" id="detailDeleteBtn">Delete</button>
+        </div>
+        <button class="btn btn-secondary" data-close="detailModal">Close</button>
+        <button class="btn btn-primary" id="detailEditBtn">Edit</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Create / edit appointment form -->
+  <div class="modal-overlay hidden" id="formModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="formTitle">New Appointment</h2>
+        <button class="close-btn" data-close="formModal">&times;</button>
+      </div>
+      <form id="apptForm">
+        <div class="modal-body">
+          <div class="form-error-banner" id="formError"></div>
+
+          <div class="form-group">
+            <label for="f_client">Client</label>
+            <select id="f_client" required></select>
+          </div>
+
+          <div class="form-group">
+            <label for="f_pet">Pet</label>
+            <select id="f_pet">
+              <option value="">— No pet on file —</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="f_service">Service</label>
+            <input type="text" id="f_service" list="serviceOptions" placeholder="e.g. Full Groom" required>
+            <datalist id="serviceOptions">
+              <option value="Bath &amp; Brush">
+              <option value="Full Groom">
+              <option value="Puppy Intro Groom">
+              <option value="Nail Trim">
+              <option value="De-Shedding Treatment">
+              <option value="Teeth Brushing Add-On">
+            </datalist>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="f_date">Date</label>
+              <input type="date" id="f_date" required>
+            </div>
+            <div class="form-group">
+              <label for="f_time">Start time</label>
+              <input type="time" id="f_time" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="f_duration">Duration (minutes)</label>
+              <input type="number" id="f_duration" min="15" step="15" value="60" required>
+            </div>
+            <div class="form-group">
+              <label for="f_groomer">Groomer</label>
+              <select id="f_groomer"></select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="f_status">Status</label>
+            <select id="f_status">
+              <option value="scheduled">Scheduled</option>
+              <option value="completed">Completed</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="f_notes">Notes</label>
+            <textarea id="f_notes" placeholder="Anything the next groomer should know..."></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-close="formModal">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="formSaveBtn">Save Appointment</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/layout.js"></script>
+  <script src="/js/calendar.js"></script>
+</body>
+</html>

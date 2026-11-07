@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GroomCal</title>
+  <script src="/js/api.js"></script>
+  <script>
+    (async function () {
+      try {
+        await Api.me();
+        window.location.replace('/calendar.html');
+      } catch (_) {
+        window.location.replace('/login.html');
+      }
+    })();
+  </script>
+</head>
+<body></body>
+</html>
