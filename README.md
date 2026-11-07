@@ -2,6 +2,14 @@
 
 A shared scheduling calendar and client manager for a two-groomer dog grooming business. Built as a lightweight Node.js/Express app with no build step, architected to deploy **entirely for free on Netlify**.
 
+## Live site
+
+**https://groomcal.netlify.app**
+
+- Deployed from [github.com/Chris-Mason-Dev/GroomCal](https://github.com/Chris-Mason-Dev/GroomCal) — every push to `main` auto-deploys
+- Database: Turso project `groomcal` (free tier, US East)
+- ⚠️ **Change the default groomer passwords before entering real client data** — see [Local development](#local-development) below for the default logins. There's no in-app "change password" screen yet.
+
 ## Features
 
 - **Login** for each groomer (JWT in an httpOnly cookie)
@@ -51,7 +59,7 @@ For auto-restart on file changes: `npm run dev`
 
 ## Deploying for free (Netlify + Turso)
 
-This mirrors the same free-hosting pattern already used by the `groomer-has-it` project in this workspace.
+The live site above is already deployed this way — these steps are for redeploying elsewhere (a fresh account, a fork, etc.) or for reference. This mirrors the same free-hosting pattern already used by the `groomer-has-it` project in this workspace.
 
 ### 1. Create a free Turso database (persistent hosted SQLite)
 
@@ -78,7 +86,8 @@ node -e "console.log(require('crypto').randomBytes(48).toString('hex'))"
    - `JWT_SECRET`
 4. Deploy. The first request to any `/api/*` route creates the schema and seeds the two default groomer logins automatically.
 5. Visit `https://<your-site>.netlify.app` and log in.
-6. In Netlify, you'll land on a free subdomain like `groomcal-xyz123.netlify.app`. You can rename that subdomain for free under **Site configuration → Domain management → Options → Edit site name**, and attach your own domain there later, free, once you've purchased one — no migration needed.
+6. Netlify assigns a random subdomain at first (e.g. `elaborate-dusk-061289.netlify.app`). Rename it for free under **Project configuration → General → Change project name** — this is how the live site above got its `groomcal.netlify.app` URL. Attach your own domain the same way later, free, once you've purchased one — no migration needed.
+7. New Netlify projects default to **Private** (visible only to your team). Go to **Project configuration → General → Visitor access → Edit visibility** and switch to **Public** (applies to "Production and previews") so both groomers can reach it without a Netlify login.
 
 ### Testing the Netlify Functions locally (optional)
 
